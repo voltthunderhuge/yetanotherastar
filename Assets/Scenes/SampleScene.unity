@@ -158,6 +158,7 @@ MonoBehaviour:
   _materialPath: {fileID: 2100000, guid: 29e1e839ee6b74a459022c97081d57cc, type: 2}
   _materialTileStart: {fileID: 2100000, guid: 01300d6cd074efb40805289074cddc00, type: 2}
   _materialTileGoal: {fileID: 2100000, guid: 0ddcd9d1ea2d82f4ea9e910ab153d5a2, type: 2}
+  _turnCost: 5
 --- !u!4 &199538942
 Transform:
   m_ObjectHideFlags: 0
@@ -320,8 +321,8 @@ Camera:
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
-  orthographic: 0
-  orthographic size: 5
+  orthographic: 1
+  orthographic size: 10
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -344,14 +345,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_LocalRotation: {x: 0.3022152, y: -0, z: -0, w: 0.95323974}
-  m_LocalPosition: {x: 0, y: 7.93, z: -10}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 7.93, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 35.181, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!114 &963194229
 MonoBehaviour:
   m_ObjectHideFlags: 0
