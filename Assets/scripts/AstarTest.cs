@@ -90,7 +90,7 @@ public class AstarTest : MonoBehaviour
 
 		Graphics.DrawMesh(_meshTile, start, Quaternion.identity, _materialTileStart, 0);
 		Graphics.DrawMesh(_meshTile, goal, Quaternion.identity, _materialTileGoal, 0);
-
+		/*
 		if (_cameFrom.Count > 0)
 		{
 			if (_cameFrom.ContainsKey(_goal))
@@ -109,7 +109,7 @@ public class AstarTest : MonoBehaviour
 				}
 				DrawPathNodeAt(path);
 			}
-		}
+		}*/
 	}
 
 	private bool Equal((int x, int z) a, (int x, int z) b)
@@ -170,6 +170,7 @@ public class AstarTest : MonoBehaviour
 		a.z = Mathf.FloorToInt(ta.z) + 0.5f;
 
 		Vector3[] vtx;
+		Vector2[] uvs;
 		int[] idx;
 
 		if (reducedPath.Count == 1)
@@ -183,6 +184,7 @@ public class AstarTest : MonoBehaviour
 		int vertexCount = (reducedPath.Count - 1) * 4;
 		int indexCount = (reducedPath.Count - 1) * 6;
 		vtx = new Vector3[vertexCount];
+		uvs = new Vector2[vertexCount];
 		idx = new int[indexCount];
 
 		(int x, int z) tb;
@@ -202,8 +204,7 @@ public class AstarTest : MonoBehaviour
 			vdir.x = dir.x;
 			vdir.z = dir.z;
 			vdir.Normalize();
-
-			
+		
 			int majorAxis = dir.x == 0 ? 2 : 0;
 			int minorAxis = majorAxis == 0 ? 2 : 0;
 			Debug.Log($"corner {ta} a {a} b {b} maj {majorAxis} min {minorAxis}");
@@ -219,6 +220,15 @@ public class AstarTest : MonoBehaviour
 
 			vtx[vtxIdx + 3][majorAxis] = b[majorAxis] + vdir[majorAxis]*0.5f;
 			vtx[vtxIdx + 3][minorAxis] = b[minorAxis] + 0.5f;
+
+			uvs[vtxIdx].x = vtx[vtxIdx][majorAxis] * Mathf.Sign(vdir[majorAxis]);
+			uvs[vtxIdx].y = vtx[vtxIdx][minorAxis] * Mathf.Sign(vdir[majorAxis]);
+			uvs[vtxIdx + 1].x = vtx[vtxIdx + 1][majorAxis] * Mathf.Sign(vdir[majorAxis]);
+			uvs[vtxIdx + 1].y = vtx[vtxIdx + 1][minorAxis] * Mathf.Sign(vdir[majorAxis]);
+			uvs[vtxIdx + 2].x = vtx[vtxIdx + 2][majorAxis] * Mathf.Sign(vdir[majorAxis]);
+			uvs[vtxIdx + 2].y = vtx[vtxIdx + 2][minorAxis] * Mathf.Sign(vdir[majorAxis]);
+			uvs[vtxIdx + 3].x = vtx[vtxIdx + 3][majorAxis] * Mathf.Sign(vdir[majorAxis]);
+			uvs[vtxIdx + 3].y = vtx[vtxIdx + 3][minorAxis] * Mathf.Sign(vdir[majorAxis]);
 
 			if ((majorAxis == 0 && Mathf.Sign(vdir[majorAxis]) > 0) ||
 				(majorAxis == 2 && Mathf.Sign(vdir[majorAxis]) < 0))
@@ -259,6 +269,8 @@ public class AstarTest : MonoBehaviour
 		_cablePathMesh.Clear();
 		_cablePathMesh.vertices = vtx;
 		_cablePathMesh.triangles = idx;
+		_cablePathMesh.uv = uvs;
+
 		_meshFilter.mesh = _cablePathMesh;
 	}
 
